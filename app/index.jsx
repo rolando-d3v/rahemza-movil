@@ -8,16 +8,28 @@ import {
   Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+
+
+  console.log(user);
+
+
   const handleLogin = () => {
     if (email === "admin@demo.com" && password === "123456") {
       Alert.alert("✅ Login exitoso", "Bienvenido!");
-      router.push("/home"); // Navegar a Home
+      router.replace("/home"); // Navegar a Home
+      // router.push("/home"); // Navegar a Home
     } else {
       Alert.alert("❌ Error", "Correo o contraseña incorrectos");
     }
