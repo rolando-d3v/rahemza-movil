@@ -15,15 +15,10 @@ export default function Index() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-
-
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-
-
   console.log(user);
-
 
   const handleLogin = () => {
     if (email === "admin@demo.com" && password === "123456") {
@@ -37,10 +32,12 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
+      <Text className="mb-[30px] text-white font-bold text-[28px]">
+        Iniciar Sesión
+      </Text>
 
       <TextInput
-        style={styles.input}
+        className="w-full h-[50px] p-[15px] mb-[15px] bg-white  rounded-[10px] border-[1px] border-[#fff]"
         placeholder="Correo electrónico"
         keyboardType="email-address"
         autoCapitalize="none"
@@ -49,15 +46,18 @@ export default function Index() {
       />
 
       <TextInput
-        style={styles.input}
+        className="w-full h-[50px] p-[15px] mb-[15px] bg-white  rounded-[10px] border-[1px] border-[#fff]"
         placeholder="Contraseña"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Ingresar</Text>
+      <TouchableOpacity
+        className="w-full h-[50px] bg-blue-500 rounded-[10px] justify-center items-center"
+        onPress={handleLogin}
+      >
+        <Text className="text-white font-bold text-[18px]">Ingresar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -71,24 +71,4 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#555",
   },
-  title: { fontSize: 28, fontWeight: "bold", marginBottom: 30, color: "#fff" },
-  input: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: "#ddd",
-  },
-  button: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#007AFF",
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 });
