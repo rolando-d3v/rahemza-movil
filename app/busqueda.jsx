@@ -18,7 +18,7 @@ export default function App() {
       const data = await response.json();
       setResults(data.results || []);
     } catch (error) {
-      console.error("Error buscando películas:", error);
+      console.error("Error en buscando películas:", error);
     }
   };
 
