@@ -2,8 +2,9 @@ import { Tabs } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-export default function TabLayout() {
+export default function Layout() {
   return (
     <Tabs
       screenOptions={{
@@ -14,18 +15,18 @@ export default function TabLayout() {
         tabBarBackground: () => (
           <BlurView
             tint="light"
-            intensity={100}
+            intensity={120}
             style={{
               width: "100%",
               height: 60,
-            //   backgroundColor: "white",
+              //   backgroundColor: "white",
 
-            //   marginHorizontal: 10,
-                borderRadius: 20,
-            //   borderTopLeftRadius: 20,
-            //   borderTopRightRadius: 20,
+              //   marginHorizontal: 10,
+              borderRadius: 20,
+              //   borderTopLeftRadius: 20,
+              //   borderTopRightRadius: 20,
               overflow: "hidden",
-                // marginBottom: 10,
+              // marginBottom: 10,
             }}
           />
         ),
@@ -34,7 +35,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "News",
+          title: "Home",
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
@@ -42,7 +43,31 @@ export default function TabLayout() {
                 focused && styles.activeIconContainer && styles.centerButton,
               ]}
             >
-              <Ionicons name="newspaper-outline" size={24} color={color} />
+              <Ionicons
+                name={`home${focused ? "" : "-outline"}`}
+                size={24}
+                color={color}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="lista"
+        options={{
+          title: "Lista",
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={[
+                styles.iconContainer,
+                focused && styles.activeIconContainer && styles.centerButton,
+              ]}
+            >
+              <MaterialCommunityIcons
+                name={`popcorn`}
+                size={24}
+                color={color}
+              />
             </View>
           ),
         }}
@@ -64,22 +89,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color, focused }) => (
-            <View
-              style={[
-                styles.iconContainer,
-                focused && styles.activeIconContainer && styles.centerButton,
-              ]}
-            >
-              <Ionicons name="business-outline" size={24} color={color} />
-            </View>
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="movie"
         options={{
           title: "Movie",
@@ -95,6 +104,26 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              style={[
+                styles.iconContainer,
+                focused && styles.activeIconContainer && styles.centerButton,
+              ]}
+            >
+              <Ionicons
+                name={`person${focused ? "" : "-outline"}`}
+                size={24}
+                color={color}
+              />
+            </View>
+          ),
+        }}
+      />
     </Tabs>
   );
 }
@@ -106,7 +135,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "transparent",
     position: "absolute",
     bottom: 20,
-    paddingBottom: 45,
+    paddingBottom: 30,
     left: 20,
     right: 20,
     marginHorizontal: 10,

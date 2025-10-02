@@ -1,8 +1,8 @@
 import { Text, View } from "react-native";
-import React, { Component } from "react";
+import React from "react";
 
-export default class create extends Component {
-  render() {
+export default function Create () {
+
     return (
       <View
         className="flex-1 items-center justify-center"
@@ -11,5 +11,5 @@ export default class create extends Component {
         <Text>create</Text>
       </View>
     );
-  }
+  
 }
