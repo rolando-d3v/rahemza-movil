@@ -10,12 +10,12 @@ export default function Layout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: "#2d6a4f",
+        tabBarActiveTintColor: "#fff",
         tabBarShowLabel: false, // Ocultar etiquetas por defecto
         tabBarBackground: () => (
           <BlurView
-            tint="light"
-            intensity={120}
+            tint="dark"
+            intensity={145}
             style={{
               width: "100%",
               height: 60,
@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
     right: 20,
     marginHorizontal: 10,
     // backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    // height: 60,
     elevation: 0,
     borderTopWidth: 0,
     shadowColor: "#000",
@@ -150,8 +149,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    // borderRadius: 30,
-    // overflow: 'hidden',
   },
   iconContainer: {
     width: 45,
@@ -167,7 +164,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "white",
+    backgroundColor: "#555",
     // zIndex: 90,
     justifyContent: "center",
     alignItems: "center",
@@ -175,6 +172,7 @@ const styles = StyleSheet.create({
 
     borderWidth: 5,
     // borderColor: "transparent", // Color para el borde flotante
-    borderColor: "#2d6a4f", // Color para el borde flotante
+    borderColor: "#1ca7ce", // Color para el borde flotante
+    // borderColor: "#2d6a4f", // Color para el borde flotante
   },
 });

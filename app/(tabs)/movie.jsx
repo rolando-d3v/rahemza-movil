@@ -359,6 +359,58 @@ export default function TabTwoScreen() {
             </Text>
           </TouchableOpacity>
         </View>
+        <View
+          style={{
+            // backgroundColor: "#255742",
+            backgroundColor: "#1a3a2d",
+            // backgroundColor: "#408967",
+            // backgroundColor: "#2a2545",
+            borderRadius: 12,
+            padding: 16,
+            marginBottom: 30,
+          }}
+        >
+          {/* Header */}
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              source={{
+                uri: "https://randomuser.me/api/portraits/men/32.jpg",
+              }}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 20,
+                marginRight: 10,
+              }}
+            />
+            <View>
+              <Text style={{ color: "#fff", fontWeight: "600" }}>
+                Reseña de <Text style={{ color: "#bb86fc" }}>David</Text>
+              </Text>
+              <Text style={{ color: "#ff5252" }}>★★★☆☆</Text>
+            </View>
+            <Text style={{ marginLeft: "auto", color: "#aaa" }}>💬 5</Text>
+          </View>
+
+          {/* Body */}
+          <Text
+            className="text-[#ddd] leading-normal text-[12px] text-justify mt-2.5 "
+            numberOfLines={4}
+          >
+            Hace menos de tres años, la película de Todd Phillips, de
+            presupuesto medio pero gran éxito, &quot;Joker&quot;, apuntaba
+            amenazadoramente hacia un futuro en el que las películas de
+            superhéroes de todos los tamaños se volverían tan comunes en el cine
+            moderno que ya no tendrían que ser películas de superhéroes en
+            absoluto...
+          </Text>
+
+          <TouchableOpacity style={{ marginTop: 10 }}>
+            <Text style={{ color: "#bb86fc", fontWeight: "600" }}>
+              Leer mas →
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ParallaxScrollView>
   );
