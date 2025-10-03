@@ -8,15 +8,15 @@ import {
 } from "react-native";
 import { useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
-
+import { LinearGradient } from "expo-linear-gradient";
 import { Collapsible } from "@/components/ui/collapsible";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 
 // const img = require("@/assets/images/movie/corazon.jpg");
-const img = require("@/assets/images/movie/avatar.jpg");
+// const img = require("@/assets/images/movie/avatar.jpg");
 // const img = require("@/assets/images/movie/cap4.jpg")
 // const img = require("@/assets/images/movie/predator.jpg");
-// const img = require("@/assets/images/movie/titanic.jpg");
+const img = require("@/assets/images/movie/titanic.jpg");
 // const img = require("@/assets/images/movie/infinity_war.jpg");
 
 const actors = [
@@ -69,12 +69,11 @@ export default function TabTwoScreen() {
 
   return (
     <ParallaxScrollView
-      // color_content="#0e201a"
       // color_content="#000c1b"
-      color_content="#10131a"
+      // color_content="#10131a"
       // color_content="#1a1c1e"
       // color_content="#12233b"
-      // color_content="#0a0a0d"
+      color_content="#0a0a0d"
       // color_content="#000"
 
       headerImage={
@@ -86,7 +85,47 @@ export default function TabTwoScreen() {
               height: "100%",
               objectFit: "cover",
               objectPosition: "top left",
-              resizeMode: "cover",
+              contentFit: "cover",
+            }}
+          />
+          <LinearGradient
+            colors={[
+              "transparent",
+              "transparent",
+              "transparent",
+              "transparent",
+              "transparent",
+              "transparent",
+              "rgba(0,0,0,0.5)",
+            ]}
+            // colors={["transparent", "rgba(0,0,0,0.9)"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.1, y: 0.8 }}
+            style={{
+              position: "absolute",
+              // opacity: 0.9,
+              height: "100%",
+              width: "100%",
+            }}
+          />
+          <LinearGradient
+            colors={[
+              "transparent",
+              "transparent",
+              "transparent",
+              "transparent",
+              "transparent",
+              "transparent",
+              "rgba(0,0,0,0.9)",
+            ]}
+            // colors={["transparent", "rgba(0,0,0,0.9)"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.1, y: 1.05 }}
+            style={{
+              position: "absolute",
+              opacity: 0.9,
+              height: "100%",
+              width: "100%",
             }}
           />
           <TouchableOpacity
