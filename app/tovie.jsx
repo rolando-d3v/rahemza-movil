@@ -58,7 +58,7 @@ const actors = [
   },
 ];
 
-export default function TabTwoScreen() {
+export default function ScreamMovie() {
   const [movie, setMovie] = useState({
     title: "Titanic",
     director: "James Cameron",

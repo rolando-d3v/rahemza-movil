@@ -14,17 +14,18 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "bundleIdentifier": "com.rahemza.app",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.rahemza.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
        
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.rolando3388.rahemzamovil"
+      "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",

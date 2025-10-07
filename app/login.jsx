@@ -73,27 +73,21 @@
 //   },
 // });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+  Pressable,
+} from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as AuthSession from "expo-auth-session";
-import { useAuthStore } from "../store/authStore";
+// import { useAuthStore } from "../store/store";
+// import { useAuthStore } from "../store/authStore";
+
+import * as Google from "expo-auth-session/providers/google";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -101,12 +95,20 @@ const API_URL = "http://localhost:3000";
 
 export default function LoginScreen() {
   const [loading, setLoading] = React.useState(false);
-  const { setUser, checkAuth } = useAuthStore();
+  // const { setUser, checkAuth } = useAuthStore();
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "YOUR_CLIENT_ID",
+    iosClientId: "YOUR_CLIENT_ID",
+    webClientId: "YOUR_CLIENT_ID",
+    // redirectUri: AuthSession.makeRedirectUri({ useProxy: true }),
+    // scopes: ["profile", "email"],
+  });
 
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
-      
+
       // Abrir el navegador para autenticación
       const result = await WebBrowser.openAuthSessionAsync(
         `${API_URL}/api/auth/sign-in/social?provider=google`,
@@ -115,7 +117,7 @@ export default function LoginScreen() {
 
       if (result.type === "success") {
         // Después del login, verificar sesión
-        await checkAuth();
+        // await checkAuth();
       }
     } catch (error) {
       console.error("Error en login:", error);
@@ -130,15 +132,23 @@ export default function LoginScreen() {
       <Text style={styles.title}>Bienvenido</Text>
       <Text style={styles.subtitle}>Inicia sesión para continuar</Text>
 
-      
-        {loading ? (
-          <ActivityIndicator size="large" color="#4285F4" />
-        ) : (
-          <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
-            <Text style={styles.buttonText}>Continuar con Google</Text>
-          </TouchableOpacity>
-        )}
-      
+      {loading ? (
+        <ActivityIndicator size="large" color="#4285F4" />
+      ) : (
+        <TouchableOpacity
+          style={styles.googleButton}
+          onPress={handleGoogleLogin}
+        >
+          <Text style={styles.buttonText}>Continuar con Google 2</Text>
+        </TouchableOpacity>
+      )}
+
+      <Pressable
+        style={styles.googleButton}
+        onPress={() => promptAsync().catch((e) => console.error("error", e))}
+      >
+        <Text>Login con Google 3</Text>
+      </Pressable>
     </View>
   );
 }
@@ -149,17 +159,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#f5f5f5"
+    backgroundColor: "#f5f5f5",
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    marginBottom: 10
+    marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
     color: "#666",
-    marginBottom: 40
+    marginBottom: 40,
   },
   googleButton: {
     backgroundColor: "#4285F4",
@@ -167,11 +177,11 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 8,
     minWidth: 250,
-    alignItems: "center"
+    alignItems: "center",
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
-    fontWeight: "600"
-  }
+    fontWeight: "600",
+  },
 });

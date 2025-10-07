@@ -1,52 +1,127 @@
-import React, { useState } from "react";
-import { View, TextInput, Button, FlatList, Text, Image, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import {
+  View,
+  TextInput,
+  ScrollView,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { fetchSearchMovies, fetchTrendingMovies } from "../api/apimovie";
+import { useNavigation } from "@react-navigation/native";
 
 export default function App() {
-  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
 
-  const searchMovies = async () => {
-    if (!query) return;
 
-    try {
-      const API_KEY = "TU_API_KEY_AQUI"; // 🔑 pon tu API Key
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(
-          query
-        )}`
-      );
-      const data = await response.json();
-      setResults(data.results || []);
-    } catch (error) {
-      console.error("Error en buscando películas:", error);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    getTrendingMovies();
+  }, []);
+
+  const getTrendingMovies = async () => {
+    const movies = await fetchTrendingMovies();
+    console.log(movies);
+    // setResults(movies.results);
+  };
+
+  const getSearchMovies = (value) => {
+    if (value && value.length > 2) {
+      setLoading(true);
+      fetchSearchMovies({
+        query: value,
+        include_adult: "false",
+        language: "es-mx",
+        // language: "es-ES",
+        // language: "en-US",
+        page: "1",
+      }).then((data) => {
+        setLoading(false);
+        console.log("go", data);
+        if (data && data.results) {
+          setResults(data.results);
+        }
+      });
+    } else {
+      setLoading(false);
+      setResults([]);
     }
+
+    // const movies = await fetchSearchMovies();
+    // console.log(movies);
+    console.log(value);
+    // setResults(movies.results);
   };
 
   return (
     <View style={styles.container}>
       <TextInput
+        onChangeText={getSearchMovies}
         placeholder="Buscar película..."
         style={styles.input}
-        value={query}
-        onChangeText={setQuery}
+        // value={query}
       />
-      <Button title="Buscar" onPress={searchMovies} />
+      {/* <Button title="Buscar" onPress={ () => searchMovies()} /> */}
 
-      <FlatList
+      {/* <FlatList
         data={results}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.movieItem}>
             {item.poster_path && (
               <Image
-                source={{ uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }}
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w200${item?.poster_path}`,
+                }}
                 style={styles.poster}
               />
             )}
             <Text style={styles.title}>{item.title}</Text>
+            <Text className="text-green-900  ml-1">
+              {item?.title.length > 15
+                ? item?.title.slice(0, 15) + "..."
+                : item?.title}
+            </Text>
           </View>
         )}
-      />
+      /> */}
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+        className="space-y-3"
+        // contentContainerStyle={styles.container}
+      >
+        <Text className="text-2xl font-bold">Results</Text>
+
+        <View>
+          {results.map((item, index) => (
+            <TouchableWithoutFeedback key={index}
+            onPress={()=> navigation.push('tovie', item)}
+            >
+              <View style={styles.movieItem}>
+                {item.poster_path && (
+                  <Image
+                    source={{
+                      uri: `https://image.tmdb.org/t/p/w200${item?.poster_path}`,
+                    }}
+                    style={styles.poster}
+                  />
+                )}
+                <Text style={styles.title}>{item.title}</Text>
+                <Text className="text-green-900  ml-1">
+                  {item?.title.length > 15
+                    ? item?.title.slice(0, 15) + "..."
+                    : item?.title}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 }
