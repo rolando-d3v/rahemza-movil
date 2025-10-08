@@ -11,6 +11,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { LinearGradient } from "expo-linear-gradient";
 import { Collapsible } from "@/components/ui/collapsible";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
+import { useLocalSearchParams } from "expo-router";
 
 // const img = require("@/assets/images/movie/corazon.jpg");
 // const img = require("@/assets/images/movie/avatar.jpg");
@@ -58,13 +59,17 @@ const actors = [
   },
 ];
 
-export default function ScreamMovie() {
+export default function Movie() {
   const [movie, setMovie] = useState({
     title: "Titanic",
     director: "James Cameron",
     duration: "195 min",
     year: "1997",
   });
+
+  const {id} = useLocalSearchParams()
+
+  console.log(id)
 
   const handlePress = () => {
     console.log("Presionado");

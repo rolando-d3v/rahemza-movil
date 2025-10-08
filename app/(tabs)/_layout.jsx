@@ -10,7 +10,7 @@ export default function Layout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: styles.tabBar,
+        // tabBarStyle: styles.tabBar,
         tabBarInactiveTintColor: "#ccc",
         tabBarActiveTintColor: "#05CA79",
         // tabBarActiveTintColor: "#ffffff",
@@ -31,7 +31,8 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="(home)"
+        // name="index"
         options={{
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
@@ -127,14 +128,14 @@ export default function Layout() {
 }
 
 const styles = StyleSheet.create({
-  tabBar: {
-    height: 150,
-    borderTopWidth: 0,
-    shadowColor: "#000",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
+  // tabBar: {
+  //   height: 150,
+  //   borderTopWidth: 0,
+  //   shadowColor: "#000",
+  //   flexDirection: "row",
+  //   justifyContent: "space-around",
+  //   alignItems: "center",
+  // },
   iconContainer: {
     width: 45,
     height: 45,

@@ -1,6 +1,7 @@
 import { Text, View, TouchableOpacity } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native"; // ✅ Importa el hook
+import { Link } from "expo-router";
 
 export default function Lista() {
   const { t } = useTranslation();
@@ -18,9 +19,10 @@ export default function Lista() {
       <TouchableOpacity onPress={() => navigation.push("login")}>
         <Text>login</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push("busqueda")}>
-        <Text>busqueda</Text>
-      </TouchableOpacity>
+   
+
+      <Link href="/busqueda">lista</Link>
+      <Link href="/login">login</Link>
     </View>
   );
 }

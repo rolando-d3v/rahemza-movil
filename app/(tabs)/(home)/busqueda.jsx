@@ -8,13 +8,13 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
-import { fetchSearchMovies, fetchTrendingMovies } from "../api/apimovie";
+import { fetchSearchMovies, fetchTrendingMovies } from "../../../api/apimovie";
 import { useNavigation } from "@react-navigation/native";
+import { Link } from "expo-router";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
-
 
   const navigation = useNavigation();
 
@@ -97,27 +97,33 @@ export default function App() {
       >
         <Text className="text-2xl font-bold">Results</Text>
 
+        <Link href="/movie/123">Movie</Link>
+
         <View>
           {results.map((item, index) => (
-            <TouchableWithoutFeedback key={index}
-            onPress={()=> navigation.push('tovie', item)}
+            <TouchableWithoutFeedback
+              key={index}
+              // onPress={()=> navigation.push('movie', item)}
             >
-              <View style={styles.movieItem}>
-                {item.poster_path && (
-                  <Image
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/w200${item?.poster_path}`,
-                    }}
-                    style={styles.poster}
-                  />
-                )}
-                <Text style={styles.title}>{item.title}</Text>
-                <Text className="text-green-900  ml-1">
-                  {item?.title.length > 15
-                    ? item?.title.slice(0, 15) + "..."
-                    : item?.title}
-                </Text>
-              </View>
+              <Link href={`/movie/1222`}>
+              {/* <Link href={`/movie/${item.id}`}> */}
+                <View style={styles.movieItem}>
+                  {item.poster_path && (
+                    <Image
+                      source={{
+                        uri: `https://image.tmdb.org/t/p/w200${item?.poster_path}`,
+                      }}
+                      style={styles.poster}
+                    />
+                  )}
+                  <Text style={styles.title}>{item.title}</Text>
+                  <Text className="text-green-900  ml-1">
+                    {item?.title.length > 15
+                      ? item?.title.slice(0, 15) + "..."
+                      : item?.title}
+                  </Text>
+                </View>
+              </Link>
             </TouchableWithoutFeedback>
           ))}
         </View>
