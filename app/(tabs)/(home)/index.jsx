@@ -1,17 +1,17 @@
-import { ImageBackground } from "expo-image";
 import { useTranslation } from "react-i18next";
 import { BlurView } from "expo-blur";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import { useState } from "react";
-import { Collapsible } from "../../../components/ui/collapsible";
+import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import { useEffect, useState } from "react";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { Link } from "expo-router";
+import logo from "../../../assets/icons/rahemza.png";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Octicons from "@expo/vector-icons/Octicons";
 
+import vengadores from "../../../assets/images/social/vengadores.jpg";
+import social2 from "../../../assets/images/social/social2.jpg";
+import social3 from "../../../assets/images/social/social3.jpg";
 // import i18n from "@/i18n";
 
 export default function HomeScreen() {
@@ -25,434 +25,253 @@ export default function HomeScreen() {
     year: "1997",
   });
 
-  // const img = require("@/assets/images/movie/corazon.jpg");
-  // const img = require("@/assets/images/movie/infinity_war.jpg");
-  const img = require("@/assets/images/movie/avatar.jpg")
-  // const img = require("@/assets/images/movie/cap4.jpg")
-  // const img = require("@/assets/images/movie/predator.jpg")
-  // const img = require("@/assets/images/movie/titanic.jpg");
-
-  const actors = [
+  const favoriteFilms = [
     {
       id: 1,
-      name: "K. Winslet",
-      img: require("@/assets/images/actores/kate.jpg"),
+      title: "The Apartment",
+      poster: "https://m.media-amazon.com/images/M/MV5BM...jpg",
     },
     {
       id: 2,
-      name: "L. DiCaprio",
-      img: require("@/assets/images/actores/leonardo.jpg"),
+      title: "Dr. Strangelove",
+      poster: "https://m.media-amazon.com/images/M/MV5BM...jpg",
     },
     {
       id: 3,
-      name: "K. Winslet",
-      img: require("@/assets/images/actores/kate.jpg"),
+      title: "Solaris",
+      poster: "https://m.media-amazon.com/images/M/MV5BM...jpg",
     },
     {
       id: 4,
-      name: "L. DiCaprio",
-      img: require("@/assets/images/actores/leonardo.jpg"),
+      title: "The King of Comedy",
+      poster: "https://m.media-amazon.com/images/M/MV5BM...jpg",
     },
     {
       id: 5,
-      name: "K. Winslet",
-      img: require("@/assets/images/actores/kate.jpg"),
+      title: "The King of Comedy",
+      poster: "https://m.media-amazon.com/images/M/MV5BM...jpg",
     },
     {
       id: 6,
-      name: "L. DiCaprio",
-      img: require("@/assets/images/actores/leonardo.jpg"),
+      title: "The King of Comedy",
+      poster: "https://m.media-amazon.com/images/M/MV5BM...jpg",
+    },
+  ];
+
+  const social = [
+    {
+      id: 1,
+      title: "The Apartment",
+      img: social2,
+    },
+    {
+      id: 2,
+      title: "Dr. Strangelove",
+      img: social3,
+    },
+    {
+      id: 3,
+      title: "Solaris",
+      img: social2,
+    },
+    {
+      id: 4,
+      title: "The King of Comedy",
+      img: vengadores,
     },
   ];
 
   return (
-    <ImageBackground contentFit="cover" source={img} style={styles.container}>
-      <BlurView
-        intensity={60}
-        tint="dark"
-        style={{ flex: 1, width: "100%", height: "100%" }}
-      >
-        <ScrollView
-          contentContainerStyle={{ paddingBottom: 80, minHeight: "100%" }}
-          showsVerticalScrollIndicator={false}
+    <ScrollView
+      contentContainerStyle={styles.container}
+      vertical
+      // showsVerticalScrollIndicator={false}
+    >
+      <View style={{ flex: 1, backgroundColor: "#0a0a0d" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            // justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: 40,
+            gap: 8,
+            marginHorizontal: "auto",
+          }}
         >
-          {/* <View style={{ flex: 1 }}> */}
+          <Text style={{ fontSize: 22, fontWeight: "bold", color: "#fff" }}>
+            Rahemza
+          </Text>
+          <Image source={logo} style={{ width: 32, height: 32 }} />
+        </View>
 
-          <BlurView intensity={120} tint="dark" style={styles.blur_container}>
-            {/* <BlurView intensity={100} tint="dark" style={styles.blur_div}> */}
-            <View
-              style={{
-                flexDirection: "row",
-                // alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 12,
-                // width: "100%",
-              }}
-            >
-              <View style={{ width: 100, position: "relative" }}>
+        <View style={styles.titleContainer}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "bold",
+              color: "#fff",
+              marginVertical: 10,
+            }}
+          >
+            Top de semana
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {favoriteFilms?.map((film) => (
+              <View
+                key={film.id}
+                style={{
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: 100,
+                  gap: 4,
+                  marginHorizontal: 4,
+                }}
+              >
                 <Image
-                  source={img}
-                  // source={movie.image}
+                  key={film.id}
+                  // source={img}
+                  source={require("@/assets/images/movie/corazon.jpg")}
+                  // source={film?.poster}
+                  // source={{ uri: actor.img }}
                   style={{
-                    width: 120,
-                    height: 180,
-                    borderRadius: 6,
-                    borderWidth: 0.25,
-                    borderColor: "white",
-                    // shadowColor: "white",
-                    // shadowOffset: { width: 0, height: 2 },
-                    // shadowOpacity: 1,
-                    // shadowRadius: 10,
-                    // elevation: 5,
+                    width: 100,
+                    height: 150,
+                    borderWidth: 1,
+                    borderColor: "gray",
+                    borderRadius: 4,
                   }}
-                  contentFit="cover"
                 />
                 <Text
                   style={{
                     color: "white",
-                    fontSize: 14,
-                    position: "absolute",
-                    top: 0,
-                    right: -60,
+                    fontSize: 10,
+                    textAlign: "center",
+                    paddingHorizontal: 4,
+                    borderRadius: 6,
                   }}
                 >
-                  {movie.year}
+                  {film.title}
                 </Text>
               </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View
+          style={{
+            width: "100%",
+            marginVertical: 10,
+            marginHorizontal: "auto",
+          }}
+        >
+          <Link href="/busqueda">
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                // gap: 20,
+                paddingVertical: 4,
+                paddingHorizontal: 8,
+                borderRadius: 6,
+                backgroundColor: "#ccc",
+                marginHorizontal: "auto",
+                height: 40,
+              }}
+            >
+              <Text>Buscar</Text>
+              <FontAwesome5 name="search" size={22} color="black" />
+            </View>
+          </Link>
+        </View>
+
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: "bold",
+            color: "#fff",
+            marginTop: 20,
+            paddingHorizontal: 6,
+          }}
+        >
+          Publicaciones Amigos
+        </Text>
+
+        {social?.map((social) => {
+          return (
+            <View
+              key={social.id}
+              style={{
+                marginVertical: 10,
+                marginHorizontal: "auto",
+                width: "100%",
+                backgroundColor: "#000",
+                borderRadius: 6,
+                padding: 8,
+              }}
+            >
+              <View style={{ width: "100%", height: 200 }}>
+                <Image
+                  source={social?.img}
+                  contentFit="cover"
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </View>
+              <Text style={{ fontSize: 13, fontWeight: 400, color: "#fff" }}>
+                Marvel Cinematic Universe para ver en el cine
+              </Text>
 
               <View
-                style={{
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-
-                  width: "65%",
-                }}
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
               >
-                <Text style={{ color: "white", fontSize: 30, padding: 0 }}>
-                  {movie.title}
-                </Text>
-                <Text style={{ color: "white", fontSize: 14 }}>
-                  Director: {movie.director}{" "}
-                </Text>
-                <Text style={{ color: "white", fontSize: 14 }}>
-                  {movie.duration}
-                </Text>
                 <View
-                  style={{
-                    flexDirection: "row",
-                    marginTop: 12,
-                    gap: 10,
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
+                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
                 >
-                  <Text className="text-black text-[13px] font-bold bg-white px-1 rounded-[6px]">
-                    Vistas
-                  </Text>
-                  <Text className="text-black text-[13px] font-bold bg-white px-1 rounded-[6px]">
-                    Like
-                  </Text>
-                  <Text className="text-black text-[13px] font-bold bg-white px-1 rounded-[6px]">
-                    Listas
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.titleContainer}>
-              <Collapsible title="Resumen del Película" color_text="white">
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 12,
-                    textAlign: "justify",
-                    paddingRight: 20,
-                  }}
-                >
-                  Jack es un joven artista que gana un pasaje para viajar a
-                  América en el Titanic, el transatlántico más grande y seguro
-                  jamás construido. A bordo del buque conoce a Rose, una chica
-                  de clase alta que viaja con su madre y su prometido Cal, un
-                  millonario engreído a quien solo interesa el prestigio de la
-                  familia de su prometida. Jack y Rose se enamoran a pesar de
-                  las trabas que ponen la madre de ella y Cal en su relación.
-                  Mientras, el lujoso transatlántico se acerca a un inmenso
-                  iceberg.{" "}
-                </Text>
-              </Collapsible>
-
-              <View style={{ flexDirection: "row", marginVertical: 20 }}>
-                {["Actores", "Elenco", "Detalles"].map((tab, index) => (
-                  <TouchableOpacity key={index} style={{ marginRight: 20 }}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "600",
-                        color: tab === "Actores" ? "#fff" : "#aaa",
-                      }}
-                    >
-                      {tab}
-                    </Text>
-                    {tab === "Actores" && (
-                      <View
-                        style={{
-                          height: 3,
-                          backgroundColor: "#bb86fc",
-                          borderRadius: 2,
-                          marginTop: 4,
-                        }}
-                      />
-                    )}
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {actors?.map((actor) => (
-                  <View
-                    key={actor.id}
-                    style={{
-                      flexDirection: "column",
-                      alignItems: "center",
-                      width: 80,
-                      gap: 4,
-                      marginHorizontal: 4,
-                    }}
+                  <Octicons name="heart-fill" size={24} color="white" />
+                  <Text
+                    style={{ fontSize: 14, fontWeight: "300", color: "#fff" }}
                   >
-                    <Image
-                      key={actor.id}
-                      // source={img}
-                      source={actor?.img}
-                      // source={{ uri: actor.img }}
-                      style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: 40,
-
-                        borderWidth: 2,
-                        borderColor: "gray",
-                      }}
-                    />
-                    <Text
-                      style={{
-                        color: "black",
-                        fontSize: 10,
-                        textAlign: "center",
-                        backgroundColor: "#ccc",
-                        paddingHorizontal: 4,
-                        borderRadius: 6,
-                      }}
-                    >
-                      {actor.name}
-                    </Text>
-                  </View>
-                ))}
-              </ScrollView>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginTop: 30,
-                  marginBottom: 10,
-                }}
-              >
-                <Text
-                  style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}
-                >
-                  {/* All Reviews */}
-                  Reseñas
-                </Text>
-                <TouchableOpacity>
-                  <Text style={{ color: "#bb86fc", fontWeight: "600" }}>
-                    Ver todo
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              {/* Review card */}
-              <View
-                style={{
-                  // backgroundColor: "#255742",
-                  backgroundColor: "#1a3a2d",
-                  // backgroundColor: "#408967",
-                  // backgroundColor: "#2a2545",
-                  borderRadius: 12,
-                  padding: 16,
-                  marginBottom: 30,
-                }}
-              >
-                {/* Header */}
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Image
-                    source={{
-                      uri: "https://randomuser.me/api/portraits/men/32.jpg",
-                    }}
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 20,
-                      marginRight: 10,
-                    }}
-                  />
-                  <View>
-                    <Text style={{ color: "#fff", fontWeight: "600" }}>
-                      Reseña de <Text style={{ color: "#bb86fc" }}>David</Text>
-                    </Text>
-                    <Text style={{ color: "#ff5252" }}>★★★☆☆</Text>
-                  </View>
-                  <Text style={{ marginLeft: "auto", color: "#aaa" }}>
-                    💬 5
+                    8k
                   </Text>
                 </View>
-
-                {/* Body */}
-                <Text
-                  className="text-[#ddd] leading-normal text-[12px] text-justify mt-2.5 "
-                  numberOfLines={4}
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
                 >
-                  Hace menos de tres años, la película de Todd Phillips, de
-                  presupuesto medio pero gran éxito, &quot;Joker&quot;, apuntaba
-                  amenazadoramente hacia un futuro en el que las películas de
-                  superhéroes de todos los tamaños se volverían tan comunes en
-                  el cine moderno que ya no tendrían que ser películas de
-                  superhéroes en absoluto...
-                </Text>
+                  <MaterialIcons name="sms" size={24} color="white" />
 
-                <TouchableOpacity style={{ marginTop: 10 }}>
-                  <Text style={{ color: "#bb86fc", fontWeight: "600" }}>
-                    Leer mas →
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  // backgroundColor: "#255742",
-                  backgroundColor: "#1a3a2d",
-                  // backgroundColor: "#408967",
-                  // backgroundColor: "#2a2545",
-                  borderRadius: 12,
-                  padding: 16,
-                  marginBottom: 30,
-                }}
-              >
-                {/* Header */}
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Image
-                    source={{
-                      uri: "https://randomuser.me/api/portraits/men/32.jpg",
-                    }}
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 20,
-                      marginRight: 10,
-                    }}
-                  />
-                  <View>
-                    <Text style={{ color: "#fff", fontWeight: "600" }}>
-                      Reseña de <Text style={{ color: "#bb86fc" }}>David</Text>
-                    </Text>
-                    <Text style={{ color: "#ff5252" }}>★★★☆☆</Text>
-                  </View>
-                  <Text style={{ marginLeft: "auto", color: "#aaa" }}>
-                    💬 5
+                  <Text
+                    style={{ fontSize: 14, fontWeight: "300", color: "#fff" }}
+                  >
+                    1k
                   </Text>
                 </View>
-
-                {/* Body */}
-                <Text
-                  className="text-[#ddd] leading-normal text-[12px] text-justify mt-2.5 "
-                  numberOfLines={4}
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
                 >
-                  Hace menos de tres años, la película de Todd Phillips, de
-                  presupuesto medio pero gran éxito, &quot;Joker&quot;, apuntaba
-                  amenazadoramente hacia un futuro en el que las películas de
-                  superhéroes de todos los tamaños se volverían tan comunes en
-                  el cine moderno que ya no tendrían que ser películas de
-                  superhéroes en absoluto...
-                </Text>
-
-                <TouchableOpacity style={{ marginTop: 10 }}>
-                  <Text style={{ color: "#bb86fc", fontWeight: "600" }}>
-                    Leer mas →
+                  <Ionicons name="arrow-redo" size={24} color="white" />
+                  <Text
+                    style={{ fontSize: 14, fontWeight: "300", color: "#fff" }}
+                  >
+                    560
                   </Text>
-                </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </BlurView>
-        </ScrollView>
-      </BlurView>
-    </ImageBackground>
+          );
+        })}
+      </View>
+    </ScrollView>
   );
-}
-{
-  /* <Image
-  source={require("@/assets/images/movie/titanic.jpg")}
-  style={styles.reactLogo}
-  contentFit="cover"
-/> */
 }
 
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-  },
-  blur_container: {
-    marginTop: 300,
-    // position: "absolute",
-    // flex: 1,
-    width: "100%",
-    minHeight: "100%",
-    // bottom: 0,
-    // justifyContent: "center",
-    // textAlign: "center",
-    padding: 10,
-    // margin: 16,
-    overflow: "hidden",
-    borderRadius: 16,
-  },
-  reactLogo: {
-    width: "100%",
-    height: "100%",
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-  blur_div: {
-    position: "absolute",
-    bottom: 0,
-    height: "65%",
-    width: "100%",
-    padding: 20,
-
-    // textAlign: "center",
-    // justifyContent: "center",
-    overflow: "hidden",
-    borderRadius: 30,
-  },
-  titleContainer: {
-    color: "white",
+    backgroundColor: "#0a0a0d",
     // alignItems: "center",
-    // gap: 8,
+    // justifyContent: "center",
+    // width: "100%",
+    // height: "100%",
   },
 });
-
-// import { View, Text } from 'react-native'
-// import React from 'react'
-
-// export default function index() {
-//   return (
-//     <View className='flex-1 items-center justify-center' style={{ backgroundColor: '#040014' }} >
-//       <Text>index</Text>
-//     </View>
-//   )
-// }

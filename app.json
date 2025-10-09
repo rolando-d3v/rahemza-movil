@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",   // o "cover"
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#03C770"
     },
     "scheme": "rahemzamovil",
     "userInterfaceStyle": "automatic",
@@ -21,7 +21,8 @@
       "package": "com.rahemza.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#03C770"
+        // "backgroundColor": "#ffffff"
        
       },
       "edgeToEdgeEnabled": true,
@@ -39,7 +40,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#03C770",
           "dark": {
             "backgroundColor": "#000000"
           }
