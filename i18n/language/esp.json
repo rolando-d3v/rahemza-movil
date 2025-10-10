@@ -5,5 +5,14 @@
     "password": "Contraseña"
   },
   "continue": "Continue",
-  "login": "Iniciar ESP"
+  "login": "Iniciar ESP",
+
+  "home": {
+    "title": "Inicio",
+    "welcome": "Bienvenido a ESP"
+  },
+  "profile": {
+    "title": "Perfil",
+    "welcome": "Bienvenido a tu perfil en ESP"
+  }
 }

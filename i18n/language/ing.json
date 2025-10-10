@@ -5,5 +5,15 @@
     "password": "Password"
   },
   "continue": "Continue",
-  "login": "Login_INGLES"
+  "login": "Login_INGLES",
+
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome to ESP"
+  },
+  "profile": {
+    "title": "Profile",
+    "welcome": "Welcome to your profile in INGLES"
+  }
+
 }

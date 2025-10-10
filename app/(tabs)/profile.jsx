@@ -1,6 +1,5 @@
 import { Image } from "expo-image";
-import { StyleSheet, Text, View,ScrollView } from "react-native";
-
+import { StyleSheet, Text, View, ScrollView} from "react-native";
 
 const favoriteFilms = [
   {
@@ -37,10 +36,9 @@ const favoriteFilms = [
 
 export default function HomeScreen() {
   return (
-    <ScrollView 
-    showsVerticalScrollIndicator={false}
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+
     
-    style={styles.container}>
       <View
         style={{
           flex: 1,
@@ -48,8 +46,6 @@ export default function HomeScreen() {
           width: "100%",
           height: "100%",
           backgroundColor: "#555",
-        
-        
         }}
       />
       <View style={styles.view_img_user_wall}>
@@ -69,7 +65,7 @@ export default function HomeScreen() {
       </View>
 
       {/* <ScrollView style={styles.container_scroll_horizontal}> */}
-   
+
       <View style={styles.statsRow}>
         <View style={styles.statBox}>
           <Text style={styles.statNumber}>455 </Text>
@@ -88,7 +84,6 @@ export default function HomeScreen() {
           <Text style={styles.statLabel}>Review</Text>
         </View>
       </View>
-     
 
       {/* Favorite Films */}
       <Text style={styles.sectionTitle}>Favorite Films</Text>
@@ -153,7 +148,6 @@ export default function HomeScreen() {
           ))}
         </View>
       </ScrollView>
-   
     </ScrollView>
   );
 }
@@ -165,7 +159,6 @@ const styles = StyleSheet.create({
     // backgroundColor: "#09122C",
     // backgroundColor: "#0a0a0d",
     backgroundColor: "#0e201a",
-  
   },
   view_img_user_wall: {
     height: 200,
@@ -265,4 +258,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
   },
 });
-
