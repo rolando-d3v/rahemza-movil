@@ -1,20 +1,22 @@
 import { Tabs } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import avatar from "../../assets/images/profile/avatar1.png";
 
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import logo from "../../assets/icons/rahemza.png";
+
+import {Color} from '../../constants/color'
+
 
 export default function Layout() {
   return (
+
     <Tabs
       screenOptions={{
-        headerShown: false,
-        // tabBarStyle: styles.tabBar,
         tabBarInactiveTintColor: "#ccc",
         tabBarActiveTintColor: "#05CA79",
-        // tabBarActiveTintColor: "#ffffff",
-        // tabBarActiveTintColor: "#00c877",
         tabBarStyle: {
           position: "absolute",
           borderTopWidth: 0,
@@ -32,9 +34,65 @@ export default function Layout() {
     >
       <Tabs.Screen
         name="(home)"
-        // name="index"
         options={{
           title: "Home",
+          headerBackground: () => (
+            <LinearGradient
+              colors={[Color.primary_color,"#000"]}
+              start={{ x: 0.1, y: 0 }}
+              end={{ x: 0.1, y: 0.9 }}
+              style={{ flex: 1 }}
+            />
+          ),
+          headerLeft: () => (
+            <Image
+              source={avatar}
+              style={{
+                width: 30,
+                height: 30,
+                marginLeft: 15,
+                borderRadius: 20,
+              }}
+            />
+          ),
+          headerRight: () => (
+            <Ionicons
+              name="settings-outline"
+              size={24}
+              color="white"
+              style={{
+                width: 30,
+                height: 30,
+                marginRight: 10,
+               
+              }}
+            />
+          ),
+          headerTitle: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                minWidth: "100%",
+                justifyContent: "center",
+              
+              
+              }}
+            >
+              <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>
+                Rahemza
+              </Text>
+              <Image
+                source={logo}
+                style={{
+                  width: 30,
+                  height: 30,
+                  marginLeft: 10,
+                  borderRadius: 20,
+                }}
+              />
+            </View>
+          ),
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
@@ -106,6 +164,7 @@ export default function Layout() {
       <Tabs.Screen
         name="profile"
         options={{
+          // headerShown: false,
           title: "Profile",
           tabBarIcon: ({ color, focused }) => (
             <View
@@ -128,14 +187,6 @@ export default function Layout() {
 }
 
 const styles = StyleSheet.create({
-  // tabBar: {
-  //   height: 150,
-  //   borderTopWidth: 0,
-  //   shadowColor: "#000",
-  //   flexDirection: "row",
-  //   justifyContent: "space-around",
-  //   alignItems: "center",
-  // },
   iconContainer: {
     width: 45,
     height: 45,

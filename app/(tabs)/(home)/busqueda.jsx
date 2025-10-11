@@ -11,8 +11,9 @@ import {
 import { fetchSearchMovies, fetchTrendingMovies } from "../../../api/apimovie";
 import { useNavigation } from "@react-navigation/native";
 import { Link } from "expo-router";
+import { Color } from "../../../constants/color";
 
-export default function App() {
+export default function Busqueda() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
 
@@ -64,34 +65,11 @@ export default function App() {
         style={styles.input}
         // value={query}
       />
-      {/* <Button title="Buscar" onPress={ () => searchMovies()} /> */}
-
-      {/* <FlatList
-        data={results}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.movieItem}>
-            {item.poster_path && (
-              <Image
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w200${item?.poster_path}`,
-                }}
-                style={styles.poster}
-              />
-            )}
-            <Text style={styles.title}>{item.title}</Text>
-            <Text className="text-green-900  ml-1">
-              {item?.title.length > 15
-                ? item?.title.slice(0, 15) + "..."
-                : item?.title}
-            </Text>
-          </View>
-        )}
-      /> */}
+     
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
+        contentContainerStyle={{ paddingHorizontal: 2 }}
         className="space-y-3"
         // contentContainerStyle={styles.container}
       >
@@ -103,10 +81,11 @@ export default function App() {
           {results.map((item, index) => (
             <TouchableWithoutFeedback
               key={index}
+
               // onPress={()=> navigation.push('movie', item)}
             >
-              <Link href={`/movie/1222`}>
-              {/* <Link href={`/movie/${item.id}`}> */}
+              <Link href={`/movie/1222`} style={{ marginVertical: 10 }}>
+                {/* <Link href={`/movie/${item.id}`}> */}
                 <View style={styles.movieItem}>
                   {item.poster_path && (
                     <Image
@@ -117,7 +96,7 @@ export default function App() {
                     />
                   )}
                   <Text style={styles.title}>{item.title}</Text>
-                  <Text className="text-green-900  ml-1">
+                  <Text className="text-green-500  ml-1">
                     {item?.title.length > 15
                       ? item?.title.slice(0, 15) + "..."
                       : item?.title}
@@ -136,28 +115,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: Color.azul_oscuro,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#fff",
     borderRadius: 8,
     padding: 10,
-    marginBottom: 10,
+    color: "#fff",
   },
   movieItem: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 8,
+    gap: 10,
   },
   poster: {
-    width: 60,
-    height: 90,
+    width: 80,
+    height: 120,
     marginRight: 10,
     borderRadius: 6,
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#fff",
   },
 });

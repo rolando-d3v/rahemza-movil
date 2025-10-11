@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
-import { Collapsible } from "../../../../components/ui/collapsible";
+import { Collapsible } from "../../components/ui/collapsible";
 
 // import i18n from "@/i18n";
 

@@ -1,15 +1,43 @@
-import { Stack } from "expo-router";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { withLayoutContext } from "expo-router";
+import { Color } from "../../../constants/color";
 
-export default function RootLayout() {
+const { Navigator } = createMaterialTopTabNavigator();
+
+export const MaterialTopTabs = withLayoutContext(Navigator);
+
+const Layout = () => {
   return (
-    <Stack
+    <MaterialTopTabs
       screenOptions={{
-        headerShown: false, // Oculta la barra con "index"
+        tabBarActiveTintColor: Color.primary_color,
+        tabBarShowIcon: true,
+        tabBarInactiveTintColor: "#ccc",
+        tabBarIndicatorStyle: { backgroundColor: Color.primary_color },
+        tabBarStyle: {
+          backgroundColor: "#000",
+        },
+        tabBarLabelStyle: {
+          fontSize: 13,
+          fontWeight: "bold",
+          textTransform: "uppercase",
+        },
       }}
     >
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="movie" options={{ headerShown: false }} />
-      <Stack.Screen name="busqueda" options={{ headerShown: false }} />
-    </Stack>
+      <MaterialTopTabs.Screen
+        name="index"
+        options={{ title: "Inicio", headerShown: false }}
+      />
+      <MaterialTopTabs.Screen
+        name="publicaciones"
+        options={{ title: "Publicaciones", headerShown: false }}
+      />
+      <MaterialTopTabs.Screen
+        name="busqueda"
+        options={{ title: "Buscar", headerShown: false }}
+      />
+    </MaterialTopTabs>
   );
-}
+};
+
+export default Layout;

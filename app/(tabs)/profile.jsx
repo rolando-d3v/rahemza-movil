@@ -34,6 +34,22 @@ const favoriteFilms = [
   },
 ];
 
+
+
+
+
+// CREATE TABLE pais (
+//   id_pais SERIAL PRIMARY KEY,
+//   desc_corta_pais VARCHAR(20) DEFAULT NULL,
+//   desc_larga_pais VARCHAR(200) DEFAULT NULL,
+//   estado_activo BOOLEAN DEFAULT TRUE
+// );
+
+
+
+
+
+
 export default function HomeScreen() {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -258,3 +274,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
   },
 });
+
+
+

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 
 
-export default function VistaCineScreen() {
+export default function WellcomeScreen() {
     return (
       <View style={styles.container}>
         <Text>VistaScreen</Text>
