@@ -2,10 +2,10 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { Color } from '../../../constants/color'
 
-export default function Publicaciones() {
+export default function Social() {
    return (
      <View style={styles.container}>
-         <Text>Publicaciones</Text>     
+         <Text className="text-white"  >Social</Text>     
      </View>
    )
 }

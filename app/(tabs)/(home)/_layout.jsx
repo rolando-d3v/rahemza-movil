@@ -29,8 +29,8 @@ const Layout = () => {
         options={{ title: "Inicio", headerShown: false }}
       />
       <MaterialTopTabs.Screen
-        name="publicaciones"
-        options={{ title: "Publicaciones", headerShown: false }}
+        name="social"
+        options={{ title: "Social", headerShown: false }}
       />
       <MaterialTopTabs.Screen
         name="busqueda"

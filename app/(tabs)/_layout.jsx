@@ -1,11 +1,11 @@
 import { Tabs } from "expo-router";
 import { StyleSheet, View, Image, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import avatar from "../../assets/images/profile/avatar1.png";
 
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import logo from "../../assets/icons/rahemza.png";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 import {Color} from '../../constants/color'
 
@@ -120,8 +120,8 @@ export default function Layout() {
                 focused && styles.activeIconContainer && styles.centerButton,
               ]}
             >
-              <MaterialCommunityIcons
-                name={`popcorn`}
+              <Ionicons
+               name={`chatbox-ellipses${focused ? "" : "-outline"}`}
                 size={24}
                 color={color}
               />

@@ -62,6 +62,7 @@ export default function Busqueda() {
       <TextInput
         onChangeText={getSearchMovies}
         placeholder="Buscar película..."
+        placeholderTextColor="#424242"
         style={styles.input}
         // value={query}
       />
