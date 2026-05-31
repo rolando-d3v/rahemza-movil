@@ -1,10 +1,11 @@
-import { Text, View, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { Color } from "@/constants/color";
 
-export default function Social() {
+export default function WelcomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Social</Text>
+      <Text style={styles.text}>VistaScreen</Text>
     </View>
   );
 }
@@ -14,9 +15,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Color.background,
+    backgroundColor: Color.azul_oscuro,
   },
   text: {
     color: Color.text_primary,
+    fontSize: 18,
   },
 });

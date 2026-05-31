@@ -1,33 +1,32 @@
-import { Tabs } from "expo-router";
+import { Tabs, Redirect } from "expo-router";
 import { StyleSheet, View, Image, Text } from "react-native";
-import avatar from "../../assets/images/profile/avatar1.png";
-
-import { LinearGradient } from "expo-linear-gradient";
+import { useSelector } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import logo from "../../assets/icons/rahemza.png";
-import Ionicons from '@expo/vector-icons/Ionicons';
-
-import {Color} from '../../constants/color'
-
+import { LinearGradient } from "expo-linear-gradient";
+import { Color } from "@/constants/color";
+import avatar from "@/assets/images/profile/avatar1.png";
+import logo from "@/assets/icons/rahemza.png";
 
 export default function Layout() {
-  return (
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
+  if (!isLoggedIn) {
+    return <Redirect href="/login" />;
+  }
+
+  return (
     <Tabs
       screenOptions={{
-        tabBarInactiveTintColor: "#ccc",
-        tabBarActiveTintColor: "#05CA79",
-        tabBarStyle: {
-          position: "absolute",
-          borderTopWidth: 0,
-          elevation: 0,
-        },
+        tabBarInactiveTintColor: Color.text_secondary,
+        tabBarActiveTintColor: Color.primary_color,
+        tabBarStyle: styles.tabBar,
         tabBarBackground: () => (
           <LinearGradient
-            colors={["transparent", "rgba(0,0,0,0.9)"]}
+            colors={[Color.transparent, Color.overlay_dark]}
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 0.4 }}
-            style={{ flex: 1, opacity: 0.9 }}
+            style={styles.tabBarGradient}
           />
         ),
       }}
@@ -38,66 +37,34 @@ export default function Layout() {
           title: "Home",
           headerBackground: () => (
             <LinearGradient
-              colors={[Color.primary_color,"#000"]}
+              colors={[Color.primary_color, Color.surface]}
               start={{ x: 0.1, y: 0 }}
               end={{ x: 0.1, y: 0.9 }}
-              style={{ flex: 1 }}
+              style={styles.headerGradient}
             />
           ),
           headerLeft: () => (
-            <Image
-              source={avatar}
-              style={{
-                width: 30,
-                height: 30,
-                marginLeft: 15,
-                borderRadius: 20,
-              }}
-            />
+            <Image source={avatar} style={styles.headerAvatar} />
           ),
           headerRight: () => (
             <Ionicons
               name="settings-outline"
               size={24}
-              color="white"
-              style={{
-                width: 30,
-                height: 30,
-                marginRight: 10,
-               
-              }}
+              color={Color.text_primary}
+              style={styles.headerSettingsIcon}
             />
           ),
           headerTitle: () => (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                minWidth: "100%",
-                justifyContent: "center",
-              
-              
-              }}
-            >
-              <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>
-                Rahemza
-              </Text>
-              <Image
-                source={logo}
-                style={{
-                  width: 30,
-                  height: 30,
-                  marginLeft: 10,
-                  borderRadius: 20,
-                }}
-              />
+            <View style={styles.headerTitleContainer}>
+              <Text style={styles.headerTitleText}>Rahemza</Text>
+              <Image source={logo} style={styles.headerLogo} />
             </View>
           ),
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
                 styles.iconContainer,
-                focused && styles.activeIconContainer && styles.centerButton,
+                focused && styles.activeIconContainer,
               ]}
             >
               <Ionicons
@@ -117,11 +84,11 @@ export default function Layout() {
             <View
               style={[
                 styles.iconContainer,
-                focused && styles.activeIconContainer && styles.centerButton,
+                focused && styles.activeIconContainer,
               ]}
             >
-              <Ionicons
-               name={`chatbox-ellipses${focused ? "" : "-outline"}`}
+              <MaterialCommunityIcons
+                name="popcorn"
                 size={24}
                 color={color}
               />
@@ -137,7 +104,7 @@ export default function Layout() {
             <View
               style={[
                 styles.iconContainer,
-                focused && styles.activeIconContainer && styles.centerButton,
+                focused && styles.activeIconContainer,
               ]}
             >
               <Ionicons name="add-circle-outline" size={36} color={color} />
@@ -153,7 +120,7 @@ export default function Layout() {
             <View
               style={[
                 styles.iconContainer,
-                focused && styles.activeIconContainer && styles.centerButton,
+                focused && styles.activeIconContainer,
               ]}
             >
               <Ionicons name="business-outline" size={24} color={color} />
@@ -164,13 +131,12 @@ export default function Layout() {
       <Tabs.Screen
         name="profile"
         options={{
-          // headerShown: false,
           title: "Profile",
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
                 styles.iconContainer,
-                focused && styles.activeIconContainer && styles.centerButton,
+                focused && styles.activeIconContainer,
               ]}
             >
               <Ionicons
@@ -187,6 +153,46 @@ export default function Layout() {
 }
 
 const styles = StyleSheet.create({
+  tabBar: {
+    position: "absolute",
+    borderTopWidth: 0,
+    elevation: 0,
+  },
+  tabBarGradient: {
+    flex: 1,
+    opacity: 0.9,
+  },
+  headerGradient: {
+    flex: 1,
+  },
+  headerAvatar: {
+    width: 30,
+    height: 30,
+    marginLeft: 15,
+    borderRadius: 20,
+  },
+  headerSettingsIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+  },
+  headerTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    minWidth: "100%",
+    justifyContent: "center",
+  },
+  headerTitleText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: Color.text_primary,
+  },
+  headerLogo: {
+    width: 30,
+    height: 30,
+    marginLeft: 10,
+    borderRadius: 20,
+  },
   iconContainer: {
     width: 45,
     height: 45,
@@ -194,188 +200,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   activeIconContainer: {
-    backgroundColor: "white",
-  },
-  centerButton: {
+    backgroundColor: Color.text_primary,
     width: 70,
     height: 70,
     marginTop: -10,
   },
 });
-
-//  nota form de bar  flotante
-// import { Tabs } from "expo-router";
-// import { StyleSheet, View } from "react-native";
-// import { Ionicons } from "@expo/vector-icons";
-// import { BlurView } from "expo-blur";
-// import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-
-// export default function Layout() {
-//   return (
-//     <Tabs
-//       screenOptions={{
-//         headerShown: false,
-//         tabBarStyle: styles.tabBar,
-//         tabBarActiveTintColor: "#fff",
-//         tabBarShowLabel: false, // Ocultar etiquetas por defecto
-//         tabBarBackground: () => (
-//           <BlurView
-//             tint="dark"
-//             intensity={145}
-//             style={{
-//               width: "100%",
-//               height: 60,
-//               //   backgroundColor: "white",
-
-//               //   marginHorizontal: 10,
-//               borderRadius: 20,
-//               //   borderTopLeftRadius: 20,
-//               //   borderTopRightRadius: 20,
-//               overflow: "hidden",
-//               // marginBottom: 10,
-//             }}
-//           />
-//         ),
-//       }}
-//     >
-//       <Tabs.Screen
-//         name="index"
-//         options={{
-//           title: "Home",
-//           tabBarIcon: ({ color, focused }) => (
-//             <View
-//               style={[
-//                 styles.iconContainer,
-//                 focused && styles.activeIconContainer && styles.centerButton,
-//               ]}
-//             >
-//               <Ionicons
-//                 name={`home${focused ? "" : "-outline"}`}
-//                 size={24}
-//                 color={color}
-//               />
-//             </View>
-//           ),
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="lista"
-//         options={{
-//           title: "Lista",
-//           tabBarIcon: ({ color, focused }) => (
-//             <View
-//               style={[
-//                 styles.iconContainer,
-//                 focused && styles.activeIconContainer && styles.centerButton,
-//               ]}
-//             >
-//               <MaterialCommunityIcons
-//                 name={`popcorn`}
-//                 size={24}
-//                 color={color}
-//               />
-//             </View>
-//           ),
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="create"
-//         options={{
-//           title: "Create",
-//           tabBarIcon: ({ color, focused }) => (
-//             <View
-//               style={[
-//                 styles.iconContainer,
-//                 focused && styles.activeIconContainer && styles.centerButton,
-//               ]}
-//             >
-//               <Ionicons name="add-circle-outline" size={36} color={color} />
-//             </View>
-//           ),
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="movie"
-//         options={{
-//           title: "Movie",
-//           tabBarIcon: ({ color, focused }) => (
-//             <View
-//               style={[
-//                 styles.iconContainer,
-//                 focused && styles.activeIconContainer && styles.centerButton,
-//               ]}
-//             >
-//               <Ionicons name="business-outline" size={24} color={color} />
-//             </View>
-//           ),
-//         }}
-//       />
-//       <Tabs.Screen
-//         name="profile"
-//         options={{
-//           title: "Profile",
-//           tabBarIcon: ({ color, focused }) => (
-//             <View
-//               style={[
-//                 styles.iconContainer,
-//                 focused && styles.activeIconContainer && styles.centerButton,
-//               ]}
-//             >
-//               <Ionicons
-//                 name={`person${focused ? "" : "-outline"}`}
-//                 size={24}
-//                 color={color}
-//               />
-//             </View>
-//           ),
-//         }}
-//       />
-//     </Tabs>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   tabBar: {
-//     height: 60,
-//     position: "absolute",
-//     bottom: 20,
-//     paddingBottom: 30,
-//     left: 20,
-//     right: 20,
-//     marginHorizontal: 10,
-//     elevation: 0,
-//     borderTopWidth: 0,
-//     shadowColor: "#000",
-//     shadowOffset: { width: 0, height: 5 },
-//     shadowOpacity: 0.1,
-//     shadowRadius: 10,
-//     flexDirection: "row",
-//     justifyContent: "space-around",
-//     alignItems: "center",
-//   },
-//   iconContainer: {
-//     width: 45,
-//     height: 45,
-//     borderRadius: 22.5,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   activeIconContainer: {
-//     backgroundColor: "white",
-//   },
-//   centerButton: {
-//     width: 60,
-//     height: 60,
-//     borderRadius: 30,
-//     backgroundColor: "#555",
-//     // zIndex: 90,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     marginTop: -30,
-
-//     borderWidth: 5,
-//     // borderColor: "transparent", // Color para el borde flotante
-//     borderColor: "#1ca7ce", // Color para el borde flotante
-//     // borderColor: "#2d6a4f", // Color para el borde flotante
-//   },
-// });

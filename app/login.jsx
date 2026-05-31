@@ -1,124 +1,60 @@
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   TextInput,
-//   TouchableOpacity,
-//   StyleSheet,
-//   Alert,
-// } from "react-native";
-// import { useRouter } from "expo-router";
-// import { useDispatch, useSelector } from "react-redux";
-
-// export default function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const router = useRouter();
-
-//   const dispatch = useDispatch();
-//   const user = useSelector((state) => state.user);
-
-//   console.log(user);
-
-//   const handleLogin = () => {
-//     if (email === "admin@demo.com" && password === "123456") {
-//       Alert.alert("✅ Login exitoso", "Bienvenido!");
-//       router.replace("/home"); // Navegar a Home
-//       // router.push("/home"); // Navegar a Home
-//     } else {
-//       Alert.alert("❌ Error", "Correo o contraseña incorrectos");
-//     }
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text className="mb-[30px] text-white font-bold text-[28px]">
-//         Iniciar Sesión
-//       </Text>
-
-//       <TextInput
-//         className="w-full h-[50px] p-[15px] mb-[15px] bg-white  rounded-[10px] border-[1px] border-[#fff]"
-//         placeholder="Correo electrónico"
-//         keyboardType="email-address"
-//         autoCapitalize="none"
-//         value={email}
-//         onChangeText={setEmail}
-//       />
-
-//       <TextInput
-//         className="w-full h-[50px] p-[15px] mb-[15px] bg-white  rounded-[10px] border-[1px] border-[#fff]"
-//         placeholder="Contraseña"
-//         secureTextEntry
-//         value={password}
-//         onChangeText={setPassword}
-//       />
-
-//       <TouchableOpacity
-//         className="w-full h-[50px] bg-blue-500 rounded-[10px] justify-center items-center"
-//         onPress={handleLogin}
-//       >
-//         <Text className="text-white font-bold text-[18px]">Ingresar</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     padding: 20,
-//     backgroundColor: "#555",
-//   },
-// });
-
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
-  Pressable,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Dimensions,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import * as AuthSession from "expo-auth-session";
-// import { useAuthStore } from "../store/store";
-// import { useAuthStore } from "../store/authStore";
-
-import * as Google from "expo-auth-session/providers/google";
+import { Color } from "@/constants/color";
+import { login } from "@/store/slice/userSlice";
+import loginBg from "@/assets/images/login_bg.png";
+import { useRouter } from "expo-router";
 
 WebBrowser.maybeCompleteAuthSession();
+
+const { height } = Dimensions.get("window");
 
 const API_URL = "http://localhost:3000";
 
 export default function LoginScreen() {
-  const [loading, setLoading] = React.useState(false);
-  // const { setUser, checkAuth } = useAuthStore();
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: "YOUR_CLIENT_ID",
-    iosClientId: "YOUR_CLIENT_ID",
-    webClientId: "YOUR_CLIENT_ID",
-    // redirectUri: AuthSession.makeRedirectUri({ useProxy: true }),
-    // scopes: ["profile", "email"],
-  });
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
+      
+      // Login inmediato por Redux para desarrollo (según requerimiento de bypass)
+      dispatch(
+        login({
+          name: "Lando Google",
+          email: "landon@google.com",
+        })
+      );
+      router.replace("/(tabs)");
 
-      // Abrir el navegador para autenticación
+      /* 
+      // Descomentar para producción con servidor local:
       const result = await WebBrowser.openAuthSessionAsync(
         `${API_URL}/api/auth/sign-in/social?provider=google`,
         AuthSession.makeRedirectUri({ useProxy: true })
       );
-
       if (result.type === "success") {
-        // Después del login, verificar sesión
-        // await checkAuth();
+        // Verificar sesión de usuario
       }
+      */
     } catch (error) {
       console.error("Error en login:", error);
       alert("Error al iniciar sesión");
@@ -128,60 +64,193 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bienvenido</Text>
-      <Text style={styles.subtitle}>Inicia sesión para continuar</Text>
-
-      {loading ? (
-        <ActivityIndicator size="large" color="#4285F4" />
-      ) : (
-        <TouchableOpacity
-          style={styles.googleButton}
-          onPress={handleGoogleLogin}
-        >
-          <Text style={styles.buttonText}>Continuar con Google 2</Text>
-        </TouchableOpacity>
-      )}
-
-      <Pressable
-        style={styles.googleButton}
-        onPress={() => promptAsync().catch((e) => console.error("error", e))}
+    <ImageBackground
+      source={loginBg}
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
+      <LinearGradient
+        colors={[
+          "rgba(0,0,0,0.3)",
+          "rgba(0,0,0,0.5)",
+          "rgba(0,0,0,0.8)",
+          "#000",
+        ]}
+        locations={[0, 0.3, 0.6, 1]}
+        style={styles.gradient}
       >
-        <Text>Login con Google 3</Text>
-      </Pressable>
-    </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.keyboardView}
+        >
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            {/* Header: Logo estilo Netflix */}
+            <View style={styles.header}>
+              <Text style={styles.logoText}>RAHEMZA</Text>
+            </View>
+
+            {/* Contenido principal */}
+            <View style={styles.content}>
+              <Text style={styles.headline}>
+                Películas y series ilimitadas
+              </Text>
+              <Text style={styles.subheadline}>
+                Disfruta donde quieras. Cancela cuando quieras.
+              </Text>
+
+              <View style={styles.ctaContainer}>
+                {loading ? (
+                  <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color={Color.primary_color} />
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.googleButton}
+                    onPress={handleGoogleLogin}
+                    disabled={loading}
+                    activeOpacity={0.8}
+                  >
+                    <Ionicons
+                      name="logo-google"
+                      size={22}
+                      color="#fff"
+                      style={styles.googleIcon}
+                    />
+                    <Text style={styles.googleButtonText}>
+                      Iniciar sesión con Google
+                    </Text>
+                  </TouchableOpacity>
+                )}
+
+                <Text style={styles.termsText}>
+                  Al iniciar sesión, aceptas nuestros{" "}
+                  <Text style={styles.termsLink}>Términos de uso</Text> y{" "}
+                  <Text style={styles.termsLink}>Política de privacidad</Text>.
+                </Text>
+              </View>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </LinearGradient>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#f5f5f5",
+    width: "100%",
+    height: "100%",
   },
-  title: {
+  gradient: {
+    flex: 1,
+  },
+  keyboardView: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "space-between",
+    minHeight: height,
+  },
+  header: {
+    alignItems: "center",
+    marginTop: Platform.OS === "ios" ? 60 : 40,
+    paddingHorizontal: 24,
+  },
+  logoText: {
+    fontSize: 42,
+    fontWeight: "900",
+    color: Color.primary_color,
+    letterSpacing: 3,
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingHorizontal: 24,
+    paddingBottom: Platform.OS === "ios" ? 50 : 40,
+  },
+  headline: {
     fontSize: 32,
     fontWeight: "bold",
-    marginBottom: 10,
+    color: Color.text_primary,
+    textAlign: "center",
+    marginBottom: 12,
+    textShadowColor: "rgba(0, 0, 0, 0.9)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 8,
+    lineHeight: 40,
   },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 40,
+  subheadline: {
+    fontSize: 18,
+    color: Color.text_muted,
+    textAlign: "center",
+    marginBottom: 32,
+    textShadowColor: "rgba(0, 0, 0, 0.8)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+    lineHeight: 26,
+    paddingHorizontal: 10,
+  },
+  ctaContainer: {
+    width: "100%",
+    alignSelf: "center",
+    maxWidth: 400,
   },
   googleButton: {
-    backgroundColor: "#4285F4",
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-    borderRadius: 8,
-    minWidth: 250,
+    flexDirection: "row",
+    backgroundColor: Color.primary_color,
+    borderRadius: 6,
+    height: 56,
+    justifyContent: "center",
     alignItems: "center",
+    marginBottom: 16,
+    ...Platform.select({
+      ios: {
+        shadowColor: Color.primary_color,
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.4,
+        shadowRadius: 10,
+      },
+      android: {
+        elevation: 8,
+      },
+      web: {
+        boxShadow: "0px 5px 15px rgba(5, 202, 121, 0.4)",
+        cursor: "pointer",
+      },
+    }),
   },
-  buttonText: {
+  googleIcon: {
+    marginRight: 12,
+  },
+  googleButtonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 17,
+    fontWeight: "bold",
+    letterSpacing: 0.5,
+  },
+  loadingContainer: {
+    height: 56,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  termsText: {
+    color: Color.text_muted,
+    fontSize: 13,
+    textAlign: "center",
+    lineHeight: 20,
+    paddingHorizontal: 20,
+  },
+  termsLink: {
+    color: Color.primary_color,
     fontWeight: "600",
   },
 });

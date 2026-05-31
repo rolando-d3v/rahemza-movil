@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { withLayoutContext } from "expo-router";
-import { Color } from "../../../constants/color";
+import { Color } from "@/constants/color";
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -12,10 +12,10 @@ const Layout = () => {
       screenOptions={{
         tabBarActiveTintColor: Color.primary_color,
         tabBarShowIcon: true,
-        tabBarInactiveTintColor: "#ccc",
+        tabBarInactiveTintColor: Color.text_secondary,
         tabBarIndicatorStyle: { backgroundColor: Color.primary_color },
         tabBarStyle: {
-          backgroundColor: "#000",
+          backgroundColor: Color.surface,
         },
         tabBarLabelStyle: {
           fontSize: 13,

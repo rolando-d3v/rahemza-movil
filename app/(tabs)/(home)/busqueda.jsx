@@ -8,16 +8,13 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
-import { fetchSearchMovies, fetchTrendingMovies } from "../../../api/apimovie";
-import { useNavigation } from "@react-navigation/native";
+import { fetchSearchMovies, fetchTrendingMovies } from "@/api/apimovie";
 import { Link } from "expo-router";
-import { Color } from "../../../constants/color";
+import { Color } from "@/constants/color";
 
 export default function Busqueda() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
-
-  const navigation = useNavigation();
 
   useEffect(() => {
     getTrendingMovies();
@@ -25,8 +22,6 @@ export default function Busqueda() {
 
   const getTrendingMovies = async () => {
     const movies = await fetchTrendingMovies();
-    console.log(movies);
-    // setResults(movies.results);
   };
 
   const getSearchMovies = (value) => {
@@ -36,12 +31,9 @@ export default function Busqueda() {
         query: value,
         include_adult: "false",
         language: "es-mx",
-        // language: "es-ES",
-        // language: "en-US",
         page: "1",
       }).then((data) => {
         setLoading(false);
-        console.log("go", data);
         if (data && data.results) {
           setResults(data.results);
         }
@@ -50,11 +42,6 @@ export default function Busqueda() {
       setLoading(false);
       setResults([]);
     }
-
-    // const movies = await fetchSearchMovies();
-    // console.log(movies);
-    console.log(value);
-    // setResults(movies.results);
   };
 
   return (
@@ -62,31 +49,24 @@ export default function Busqueda() {
       <TextInput
         onChangeText={getSearchMovies}
         placeholder="Buscar película..."
-        placeholderTextColor="#424242"
+        placeholderTextColor={Color.text_muted}
         style={styles.input}
-        // value={query}
       />
-     
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 2 }}
-        className="space-y-3"
-        // contentContainerStyle={styles.container}
+        contentContainerStyle={styles.scrollContent}
       >
-        <Text className="text-2xl font-bold">Results</Text>
+        <Text style={styles.resultsTitle}>Results</Text>
 
-        <Link href="/movie/123">Movie</Link>
+        <Link href="/movie/123" style={styles.linkText}>
+          Movie
+        </Link>
 
         <View>
           {results.map((item, index) => (
-            <TouchableWithoutFeedback
-              key={index}
-
-              // onPress={()=> navigation.push('movie', item)}
-            >
-              <Link href={`/movie/1222`} style={{ marginVertical: 10 }}>
-                {/* <Link href={`/movie/${item.id}`}> */}
+            <TouchableWithoutFeedback key={index}>
+              <Link href="/movie/1222" style={styles.movieLink}>
                 <View style={styles.movieItem}>
                   {item.poster_path && (
                     <Image
@@ -96,8 +76,8 @@ export default function Busqueda() {
                       style={styles.poster}
                     />
                   )}
-                  <Text style={styles.title}>{item.title}</Text>
-                  <Text className="text-green-500  ml-1">
+                  <Text style={styles.movieTitle}>{item.title}</Text>
+                  <Text style={styles.movieTitleTruncated}>
                     {item?.title.length > 15
                       ? item?.title.slice(0, 15) + "..."
                       : item?.title}
@@ -116,14 +96,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: Color.azul_oscuro,
+    backgroundColor: Color.background,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: Color.text_primary,
     borderRadius: 8,
     padding: 10,
-    color: "#fff",
+    color: Color.text_primary,
+  },
+  scrollContent: {
+    paddingHorizontal: 2,
+  },
+  resultsTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: Color.text_primary,
+    marginTop: 10,
+  },
+  linkText: {
+    color: Color.primary_color,
+    marginVertical: 5,
+  },
+  movieLink: {
+    marginVertical: 10,
   },
   movieItem: {
     flexDirection: "row",
@@ -136,9 +132,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 6,
   },
-  title: {
+  movieTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#fff",
+    color: Color.text_primary,
+  },
+  movieTitleTruncated: {
+    color: Color.primary_color,
+    marginLeft: 4,
   },
 });

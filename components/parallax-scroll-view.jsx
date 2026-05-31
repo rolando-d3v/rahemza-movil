@@ -42,27 +42,13 @@ export default function ParallaxScrollView({
       ref={scrollRef}
       style={styles.container}
       showsVerticalScrollIndicator={false}
-      // style={{ backgroundColor: "#fff", flex: 1 }}
       scrollEventThrottle={16}
     >
-      <Animated.View
-        style={[
-          styles.header,
-          // { backgroundColor: "#000"},
-          headerAnimatedStyle,
-        ]}
-      >
+      <Animated.View style={[styles.header, headerAnimatedStyle]}>
         {headerImage}
       </Animated.View>
 
-      <View style={{
-        backgroundColor: color_content,
-        flex: 1,
-        paddingVertical: 12,
-        paddingHorizontal: 8,
-        gap: 16,
-        overflow: "hidden",
-      }}  >
+      <View style={[styles.content, { backgroundColor: color_content }]}>
         {children}
       </View>
     </Animated.ScrollView>
@@ -75,6 +61,13 @@ const styles = StyleSheet.create({
   },
   header: {
     height: HEADER_HEIGHT,
+    overflow: "hidden",
+  },
+  content: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    gap: 16,
     overflow: "hidden",
   },
 });
